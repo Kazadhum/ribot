@@ -42,6 +42,7 @@
 			</inertial>
 		</link>
 
+
 		<!-- IMU sensor-->
 	  <!-- <gazebo reference="imu_link"> -->
         <!-- <gravity>true</gravity> -->
