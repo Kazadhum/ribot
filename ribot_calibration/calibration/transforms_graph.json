@@ -1,0 +1,148 @@
+{
+  "directed": true,
+  "graph": {},
+  "links": [
+    {
+      "child": "plate",
+      "from_bag": false,
+      "is_transformation_calibrated": false,
+      "joint_name": "world_to_plate",
+      "joint_params_calibrated": null,
+      "parent": "world",
+      "source": "world",
+      "target": "plate",
+      "type": "fixed",
+      "weight": 1
+    },
+    {
+      "child": "pattern_link",
+      "from_bag": false,
+      "is_transformation_calibrated": true,
+      "joint_name": null,
+      "joint_params_calibrated": null,
+      "parent": "world",
+      "source": "world",
+      "target": "pattern_link",
+      "type": "fixed",
+      "weight": 1
+    },
+    {
+      "child": "rgb_right_optical_frame",
+      "from_bag": false,
+      "is_transformation_calibrated": false,
+      "joint_name": "rgb_right_optical_joint",
+      "joint_params_calibrated": null,
+      "parent": "rgb_right_link",
+      "source": "rgb_right_link",
+      "target": "rgb_right_optical_frame",
+      "type": "fixed",
+      "weight": 1
+    },
+    {
+      "child": "left_support",
+      "from_bag": false,
+      "is_transformation_calibrated": false,
+      "joint_name": "plate_to_left_support",
+      "joint_params_calibrated": null,
+      "parent": "plate",
+      "source": "plate",
+      "target": "left_support",
+      "type": "fixed",
+      "weight": 1
+    },
+    {
+      "child": "right_support",
+      "from_bag": false,
+      "is_transformation_calibrated": false,
+      "joint_name": "plate_to_right_support",
+      "joint_params_calibrated": null,
+      "parent": "plate",
+      "source": "plate",
+      "target": "right_support",
+      "type": "fixed",
+      "weight": 1
+    },
+    {
+      "child": "imu_link",
+      "from_bag": false,
+      "is_transformation_calibrated": false,
+      "joint_name": "imu_joint",
+      "joint_params_calibrated": null,
+      "parent": "left_support",
+      "source": "left_support",
+      "target": "imu_link",
+      "type": "fixed",
+      "weight": 1
+    },
+    {
+      "child": "rgb_right_link",
+      "from_bag": false,
+      "is_transformation_calibrated": true,
+      "joint_name": "rgb_right_joint",
+      "joint_params_calibrated": null,
+      "parent": "right_support",
+      "source": "right_support",
+      "target": "rgb_right_link",
+      "type": "fixed",
+      "weight": 1
+    }
+  ],
+  "multigraph": false,
+  "nodes": [
+    {
+      "from_bag": false,
+      "id": "world",
+      "is_world": true,
+      "pattern": null,
+      "sensor_data": null
+    },
+    {
+      "from_bag": false,
+      "id": "imu_link",
+      "is_world": false,
+      "pattern": null,
+      "sensor_data": null
+    },
+    {
+      "from_bag": false,
+      "id": "rgb_right_link",
+      "is_world": false,
+      "pattern": null,
+      "sensor_data": null
+    },
+    {
+      "from_bag": false,
+      "id": "rgb_right_optical_frame",
+      "is_world": false,
+      "pattern": null,
+      "sensor_data": "right_camera"
+    },
+    {
+      "from_bag": false,
+      "id": "plate",
+      "is_world": false,
+      "pattern": null,
+      "sensor_data": null
+    },
+    {
+      "from_bag": false,
+      "id": "left_support",
+      "is_world": false,
+      "pattern": null,
+      "sensor_data": null
+    },
+    {
+      "from_bag": false,
+      "id": "right_support",
+      "is_world": false,
+      "pattern": null,
+      "sensor_data": null
+    },
+    {
+      "id": "pattern_link",
+      "is_world": false,
+      "pattern": "pattern_1",
+      "sensor_data": null
+    }
+  ]
+}

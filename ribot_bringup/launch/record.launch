@@ -17,11 +17,10 @@
         /tf_static
         /joint_states
 
-        /rgb_left/image_raw/compressed
-        /rgb_left/camera_info
-
         /rgb_right/image_raw/compressed
         /rgb_right/camera_info
+
+        /ground_truth/imu_tf
 
         -o $(arg bag)">
     </node>
