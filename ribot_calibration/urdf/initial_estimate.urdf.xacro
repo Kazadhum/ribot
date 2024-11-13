@@ -28,40 +28,6 @@
         <child link="plate"/>
     </joint>
 
-    <!-- Left IMU -->
-    <xacro:imu parent="left_support" prefix="imu" color_gazebo="Red">
-        <origin xyz="0.015 0 0.02" rpy="0 0 0" />          
-        <color_rgb_rviz>
-            <material name="red">
-                <color rgba="0.9 0 0 1" />
-            </material>
-        </color_rgb_rviz>
-    </xacro:imu>
-
-
-    <!-- Gazebo Plugin that publishes the GT IMU TF to a specified topic -->
-    <gazebo>
-        <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
-        <alwaysOn>true</alwaysOn>
-        <updateRate>200.0</updateRate>
-        <bodyName>imu_link</bodyName>
-        <topicName>ground_truth/imu_tf</topicName>
-        <gaussianNoise>0.00</gaussianNoise>
-        <frameName>world</frameName>
-        <xyzOffsets>0 0 0</xyzOffsets>
-        <rpyOffsets>0 0 0</rpyOffsets>
-        </plugin>
-    </gazebo>
-
-    <!-- Right Camera -->
-    <xacro:rgb_camera parent="right_support" prefix="rgb_right" color_gazebo="Green">
-        <origin xyz="0.015 0 0.012" rpy="0 0 0" />
-        <color_rgb_rviz>
-            <material name="green">
-                <color rgba="0 0.9 0 1" />
-            </material>
-        </color_rgb_rviz>
-    </xacro:rgb_camera>
 
     <link name="plate">
         <visual>
@@ -107,5 +73,41 @@
         <child link="right_support" />
         <origin xyz="0 -0.18 0.0075" rpy="0 0 0" />
     </joint>
+
+    <!-- SENSORS -->
+    <!-- Left IMU -->
+    <xacro:imu parent="left_support" prefix="imu" color_gazebo="Red">
+        <origin xyz="0.015 0 0.02" rpy="0 0 0" />          
+        <color_rgb_rviz>
+            <material name="red">
+                <color rgba="0.9 0 0 1" />
+            </material>
+        </color_rgb_rviz>
+    </xacro:imu>
+
+    <!-- Right Camera -->
+    <xacro:rgb_camera parent="right_support" prefix="rgb_right" color_gazebo="Green">
+        <origin xyz="0.015 0 0.012" rpy="0 0 0" />
+        <color_rgb_rviz>
+            <material name="green">
+                <color rgba="0 0.9 0 1" />
+            </material>
+        </color_rgb_rviz>
+    </xacro:rgb_camera>
+
+    <!-- Gazebo Plugin that publishes the GT IMU TF to a specified topic -->
+    <gazebo>
+        <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>200.0</updateRate>
+        <bodyName>imu_link</bodyName>
+        <topicName>ground_truth/imu_tf</topicName>
+        <gaussianNoise>0.00</gaussianNoise>
+        <frameName>world</frameName>
+        <xyzOffsets>0 0 0</xyzOffsets>
+        <rpyOffsets>0 0 0</rpyOffsets>
+        </plugin>
+    </gazebo>
+
 
 </robot>
