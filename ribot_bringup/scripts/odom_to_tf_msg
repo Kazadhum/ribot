@@ -13,8 +13,10 @@ def odom_to_tf(odom_msg):
     # Create a TransformStamped message
     tf_msg = TransformStamped()
     tf_msg.header.stamp = odom_msg.header.stamp  # Timestamp from Odometry
-    tf_msg.header.frame_id = odom_msg.header.frame_id  # Typically the "world" or "map" frame
-    tf_msg.child_frame_id = odom_msg.child_frame_id if hasattr(odom_msg, 'child_frame_id') else "base_link"
+    # tf_msg.header.frame_id = odom_msg.header.frame_id  # Typically the "world" or "map" frame
+    tf_msg.header.frame_id = "world"  # Typically the "world" or "map" frame
+    # tf_msg.child_frame_id = odom_msg.child_frame_id if hasattr(odom_msg, 'child_frame_id') else "base_link"
+    tf_msg.child_frame_id = "imu_link"
 
     # Set translation
     tf_msg.transform.translation.x = odom_msg.pose.pose.position.x

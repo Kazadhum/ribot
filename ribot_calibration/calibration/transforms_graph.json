@@ -27,15 +27,13 @@
       "weight": 1
     },
     {
-      "child": "rgb_right_optical_frame",
-      "from_bag": false,
+      "child": "imu_link",
+      "from_bag": true,
       "is_transformation_calibrated": false,
-      "joint_name": "rgb_right_optical_joint",
-      "joint_params_calibrated": null,
-      "parent": "rgb_right_link",
-      "source": "rgb_right_link",
-      "target": "rgb_right_optical_frame",
-      "type": "fixed",
+      "parent": "world",
+      "source": "world",
+      "target": "imu_link",
+      "type": "multiple",
       "weight": 1
     },
     {
@@ -85,6 +83,18 @@
       "target": "rgb_right_link",
       "type": "fixed",
       "weight": 1
+    },
+    {
+      "child": "rgb_right_optical_frame",
+      "from_bag": false,
+      "is_transformation_calibrated": false,
+      "joint_name": "rgb_right_optical_joint",
+      "joint_params_calibrated": null,
+      "parent": "rgb_right_link",
+      "source": "rgb_right_link",
+      "target": "rgb_right_optical_frame",
+      "type": "fixed",
+      "weight": 1
     }
   ],
   "multigraph": false,
@@ -93,6 +103,27 @@
       "from_bag": false,
       "id": "world",
       "is_world": true,
+      "pattern": null,
+      "sensor_data": null
+    },
+    {
+      "from_bag": false,
+      "id": "plate",
+      "is_world": false,
+      "pattern": null,
+      "sensor_data": null
+    },
+    {
+      "from_bag": false,
+      "id": "left_support",
+      "is_world": false,
+      "pattern": null,
+      "sensor_data": null
+    },
+    {
+      "from_bag": false,
+      "id": "right_support",
+      "is_world": false,
       "pattern": null,
       "sensor_data": null
     },
@@ -116,27 +147,6 @@
       "is_world": false,
       "pattern": null,
       "sensor_data": "right_camera"
-    },
-    {
-      "from_bag": false,
-      "id": "plate",
-      "is_world": false,
-      "pattern": null,
-      "sensor_data": null
-    },
-    {
-      "from_bag": false,
-      "id": "left_support",
-      "is_world": false,
-      "pattern": null,
-      "sensor_data": null
-    },
-    {
-      "from_bag": false,
-      "id": "right_support",
-      "is_world": false,
-      "pattern": null,
-      "sensor_data": null
     },
     {
       "id": "pattern_link",
