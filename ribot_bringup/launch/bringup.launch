@@ -11,5 +11,6 @@
     <include file="$(find ribot_bringup)/launch/visualize.launch"/>
 
     <node name="interactive_pattern" pkg="atom_worlds" type="interactive_pattern" output="screen" />
+    <node name="odom_to_tf" pkg="ribot_bringup" type="odom_to_tf_msg" />
 
 </launch>
