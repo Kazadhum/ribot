@@ -77,6 +77,8 @@ Visualization Manager:
           Value: false
         plate:
           Value: false
+        prismatic_x_link:
+          Value: true
         rgb_right_link:
           Value: true
         rgb_right_optical_frame:
@@ -90,14 +92,15 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        plate:
-          left_support:
-            imu_link:
-              {}
-          right_support:
-            rgb_right_link:
-              rgb_right_optical_frame:
+        prismatic_x_link:
+          plate:
+            left_support:
+              imu_link:
                 {}
+            right_support:
+              rgb_right_link:
+                rgb_right_optical_frame:
+                  {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -124,6 +127,10 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        prismatic_x_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         rgb_right_link:
           Alpha: 1
           Show Axes: false
@@ -137,6 +144,10 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        world:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
       Name: RobotModel
       Robot Description: robot_description
       TF Prefix: ""
@@ -147,7 +158,7 @@ Visualization Manager:
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: plate
+    Fixed Frame: world
     Frame Rate: 30
   Name: root
   Tools:
