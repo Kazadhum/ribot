@@ -1,2 +1,0 @@
-type: "position_controllers/JointPositionController"
-joint: world_to_d_prismatic_x
