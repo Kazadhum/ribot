@@ -20,8 +20,6 @@
         /rgb_right/image_raw/compressed
         /rgb_right/camera_info
 
-        /ground_truth/imu_tf
-
         -o $(arg bag)">
     </node>
 

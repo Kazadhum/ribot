@@ -72,7 +72,7 @@ sensors:
 
   right_camera:
     link: "rgb_right_optical_frame"
-    parent_link: "right_support"
+    parent_link: "plate"
     child_link: "rgb_right_link"
     topic_name: "/rgb_right/image_raw"
     modality: "rgb"

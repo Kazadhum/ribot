@@ -1,19 +1,25 @@
 <?xml version="1.0"?>
-<robot name="robot" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="ribot" xmlns:xacro="http://ros.org/wiki/xacro">
 
     <!-- ribot is a simple robotic system containing one rgb camera and an imu on top of a tripop.  -->
 
     <!-- Define  properties -->
     <xacro:property name="M_PI" value="3.1415926535897931" />
     <material name="Orange">
-        <color rgba="1.0 0.4 0.0 1.0" />
+        <color rgba="1.0 0.4 0.0 1.0"/>
     </material>
 
     <!-- Colors -->
     <material name="tripod_color">
-        <color rgba="0.21 0.21 .21 1" />
+        <color rgba="0.21 0.21 .21 1"/>
     </material>
 
+    <xacro:macro name="default_inertial">
+        <inertial>
+            <mass value="1"/>
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+        </inertial>
+    </xacro:macro>
 
     <!-- Includes -->
     <xacro:include filename="$(find ribot_description)/urdf/robot.gazebo.xacro" />
@@ -21,11 +27,15 @@
     <xacro:include filename="$(find ribot_description)/urdf/imu.urdf.xacro"/>
 
     <!-- World link -->
-    <link name="world"/>
+    <!-- <link name="world"/> -->
 
-    <joint name="world_to_plate" type="fixed">
-        <parent link="world"/>
-        <child link="plate"/>
+    <link name="base_link">
+    </link>
+
+    <joint name="base_link_to_plate" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="base_link"/>
+      <child link="plate"/>
     </joint>
 
 
@@ -43,41 +53,26 @@
                 <box size="0.04 0.15 0.015" />
             </geometry>
         </collision>
-        <inertial>
-            <mass value="1.0" />
-            <origin xyz="0 0 0" rpy="0 0 0" />
-            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
-        </inertial>
+        <xacro:default_inertial />
         <gazebo>
             <gravity>0</gravity>
         </gazebo>
 
     </link>
 
-    <!-- Tripod left support-->
-    <link name="left_support" />
+    <!-- <link name="imu">
+    </link> -->
 
-    <!-- tripod plate to tripod left support -->
-    <joint name="plate_to_left_support" type="fixed">
-        <parent link="plate" />
-        <child link="left_support" />
-        <origin xyz="0 0.18 0.0075" rpy="0 0 0" />
-    </joint>
-
-    <!-- Tripod right support-->
-    <link name="right_support" />
-
-    <!-- tripod plate to tripod right support -->
-    <joint name="plate_to_right_support" type="fixed">
-        <parent link="plate" />
-        <child link="right_support" />
-        <origin xyz="0 -0.18 0.0075" rpy="0 0 0" />
-    </joint>
+    <!-- <joint name="plate_to_imu" type="fixed">
+      <origin xyz="0 0.1 -0.305" rpy="0 0 0"/>
+      <parent link="plate"/>
+      <child link="imu"/>
+    </joint> -->
 
     <!-- SENSORS -->
     <!-- Left IMU -->
-    <xacro:imu parent="left_support" prefix="imu" color_gazebo="Red">
-        <origin xyz="0.015 0 0.02" rpy="0 0 0" />          
+    <xacro:imu parent="plate" prefix="imu" color_gazebo="Red">
+        <origin xyz="0.0 0.18 0.01" rpy="0 0 0" />          
         <color_rgb_rviz>
             <material name="red">
                 <color rgba="0.9 0 0 1" />
@@ -86,28 +81,13 @@
     </xacro:imu>
 
     <!-- Right Camera -->
-    <xacro:rgb_camera parent="right_support" prefix="rgb_right" color_gazebo="Green">
-        <origin xyz="0.015 0 0.012" rpy="0 0 0" />
+    <xacro:rgb_camera parent="plate" prefix="rgb_right" color_gazebo="Green">
+        <origin xyz="0.015 -0.18 0.0195" rpy="0 0 0" />
         <color_rgb_rviz>
             <material name="green">
                 <color rgba="0 0.9 0 1" />
             </material>
         </color_rgb_rviz>
     </xacro:rgb_camera>
-
-    <!-- Gazebo Plugin that publishes the GT IMU TF to a specified topic -->
-    <gazebo>
-        <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
-        <alwaysOn>true</alwaysOn>
-        <updateRate>200.0</updateRate>
-        <bodyName>imu_link</bodyName>
-        <topicName>ground_truth/imu_tf</topicName>
-        <gaussianNoise>0.00</gaussianNoise>
-        <frameName>world</frameName>
-        <xyzOffsets>0 0 0</xyzOffsets>
-        <rpyOffsets>0 0 0</rpyOffsets>
-        </plugin>
-    </gazebo>
-
 
 </robot>
