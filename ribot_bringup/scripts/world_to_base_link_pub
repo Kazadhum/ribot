@@ -1,0 +1,51 @@
+#!/usr/bin/env python3
+
+"""
+Subscriber-Publisher from /gazebo/model_states to /tf so we get the transformation from the world frame to the base_link of the robot.
+"""
+
+import rospy
+from gazebo_msgs.msg import ModelStates
+from tf2_msgs.msg import TFMessage
+from geometry_msgs.msg import TransformStamped
+
+def callback(model_states_msg):
+    
+    # Get id of the robot model to find the correct TF later
+    model_name_lst = model_states_msg.name
+    robot_model_name = "ribot"
+    robot_model_idx = model_name_lst.index(robot_model_name)
+
+    robot_pose = model_states_msg.pose[robot_model_idx]
+    print(model_states_msg)
+
+    # Create a TransformStamped message
+    tf_msg = TransformStamped()
+    tf_msg.header.stamp = rospy.Time.now()  # Timestamp from ROS time
+    tf_msg.header.frame_id = "world"  # Typically the "world" or "map" frame
+    tf_msg.child_frame_id = "base_link"
+
+    # Set translation
+    tf_msg.transform.translation.x = robot_pose.position.x
+    tf_msg.transform.translation.y = robot_pose.position.y
+    tf_msg.transform.translation.z = robot_pose.position.z
+
+    # Set rotation
+    tf_msg.transform.rotation = robot_pose.orientation
+
+    # Wrap in TFMessage to publish
+    tf_message = TFMessage(transforms=[tf_msg])
+    tf_pub.publish(tf_message)
+
+if __name__ == '__main__':
+    # Initialize the node
+    rospy.init_node('odom_to_tf_publisher')
+
+    # Publisher for tf messages
+    tf_pub = rospy.Publisher('/tf', TFMessage, queue_size=10)
+
+    # Subscriber to odometry messages
+    rospy.Subscriber('/gazebo/model_states', ModelStates, callback)
+
+    # Spin to keep the node active
+    rospy.spin()

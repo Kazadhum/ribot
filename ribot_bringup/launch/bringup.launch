@@ -12,4 +12,6 @@
 
     <node name="interactive_pattern" pkg="atom_worlds" type="interactive_pattern" output="screen" />
 
+    <node name="world_to_base_link_publisher" pkg="ribot_bringup" type="world_to_base_link_pub" />
+
 </launch>
