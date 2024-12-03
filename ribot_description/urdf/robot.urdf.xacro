@@ -60,14 +60,34 @@
 
     </link>
 
-    <link name="imu">
-    </link>
+    <!-- <link name="imu">
+    </link> -->
 
-    <joint name="plate_to_imu" type="fixed">
+    <!-- <joint name="plate_to_imu" type="fixed">
       <origin xyz="0 0.1 -0.305" rpy="0 0 0"/>
       <parent link="plate"/>
       <child link="imu"/>
-    </joint>
+    </joint> -->
 
+    <!-- SENSORS -->
+    <!-- Left IMU -->
+    <xacro:imu parent="plate" prefix="imu" color_gazebo="Red">
+        <origin xyz="0.0 0.18 0.01" rpy="0 0 0" />          
+        <color_rgb_rviz>
+            <material name="red">
+                <color rgba="0.9 0 0 1" />
+            </material>
+        </color_rgb_rviz>
+    </xacro:imu>
+
+    <!-- Right Camera -->
+    <xacro:rgb_camera parent="plate" prefix="rgb_right" color_gazebo="Green">
+        <origin xyz="0.015 -0.18 0.0195" rpy="0 0 0" />
+        <color_rgb_rviz>
+            <material name="green">
+                <color rgba="0 0.9 0 1" />
+            </material>
+        </color_rgb_rviz>
+    </xacro:rgb_camera>
 
 </robot>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="imu" xmlns:xacro="http://ros.org/wiki/xacro">
 
-	<!-- This is a xacro macro to define and rgb camera.
+	<!-- This is a xacro macro to define an IMU.
 	You can define as arguments the parent coordinate frame, the name of the sensor, the transformation
 	from that parent frame to the camera's root frame, the color to be used in rviz, and the color
 	used in gazebo. Colors should be specified for both rviz and gazebo since these have independent colors.
@@ -13,7 +13,7 @@
 	<xacro:macro name="imu" params="parent prefix *origin **color_rviz color_gazebo">
 
 		<joint name="${prefix}_joint" type="fixed">
-			<origin xyz="0.0 0.0 0.0" />
+			<xacro:insert_block name="origin"/>
 			<parent link="${parent}" />
 			<child link="${prefix}_link" />
 		</joint>
@@ -42,27 +42,10 @@
 			</inertial>
 		</link>
 
+		<gazebo reference="${prefix}_link">
+			<selfCollide>false</selfCollide>
+			<material>Gazebo/${color_gazebo}</material>
+		</gazebo>
 
-		<!-- IMU sensor-->
-	  <!-- <gazebo reference="imu_link"> -->
-        <!-- <gravity>true</gravity> -->
-        <!-- <sensor name="imu_sensor" type="imu"> -->
-        <!-- <always_on>true</always_on> -->
-        <!-- <update_rate>100</update_rate> -->
-        <!-- <visualize>true</visualize> -->
-        <!-- <topic>__default_topic__</topic> -->
-        <!-- <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin"> -->
-            <!-- <topicName>imu</topicName> -->
-            <!-- <bodyName>imu_link</bodyName> -->
-            <!-- <updateRateHZ>10.0</updateRateHZ> -->
-            <!-- <gaussianNoise>0.0</gaussianNoise> -->
-            <!-- <xyzOffset>0 0 0</xyzOffset> -->
-            <!-- <rpyOffset>0 0 0</rpyOffset> -->
-            <!-- <frameName>imu_link</frameName> -->
-            <!-- <initialOrientationAsReference>false</initialOrientationAsReference> -->
-        <!-- </plugin> -->
-        <!-- <pose>0 0 0 0 0 0</pose> -->
-        <!-- </sensor> -->
-        <!-- </gazebo>	 -->
 </xacro:macro>
 </robot>
