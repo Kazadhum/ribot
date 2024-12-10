@@ -108,7 +108,7 @@
       "id": "rgb_right_optical_frame",
       "is_world": false,
       "pattern": null,
-      "sensor_data": "right_camera"
+      "sensor_data": "rgb_right"
     },
     {
       "id": "pattern_link",

@@ -34,8 +34,8 @@
     <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
     <!-- Evaluation -->
     <node type="inter_collection_rgb_to_rgb_evaluation" pkg="atom_evaluation" 
-        name="inter_collection_right_camera_to_right_camera_pattern_1_evaluation"
-        args="-ss right_camera -st right_camera -wf world -train_json $(arg train_json) -test_json $(arg test_json) -csf '$(arg csf)' -sfr" 
+        name="inter_collection_rgb_right_to_rgb_right_pattern_1_evaluation"
+        args="-ss rgb_right -st rgb_right -wf world -train_json $(arg train_json) -test_json $(arg test_json) -csf '$(arg csf)' -sfr" 
         output="screen"/>
 
     

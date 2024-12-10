@@ -42,7 +42,7 @@
 
     <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
     <!-- Throttle topics -->
-    <node pkg="topic_tools" type="throttle" name="throttler_right_camera"
+    <node pkg="topic_tools" type="throttle" name="throttler_rgb_right"
           args="messages /rgb_right/image_raw/compressed_to_throttle 10 /rgb_right/image_raw/compressed"/>
     
     <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
@@ -62,7 +62,7 @@
 
     <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
     <!-- Image Topic Decompression -->
-    <node pkg="image_transport" type="republish" name="decompressor_right_camera" output="screen"
+    <node pkg="image_transport" type="republish" name="decompressor_rgb_right" output="screen"
           args="compressed in:=/rgb_right/image_raw raw out:=/rgb_right/image_raw"/>
     <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
     <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->

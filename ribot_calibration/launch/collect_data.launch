@@ -77,9 +77,9 @@
     <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
     <!-- Labeler nodes -->
     
-    <!-- Sensor right_camera rgb_labeler -->
-    <node name="right_camera_labeler" pkg="atom_calibration" type="rgb_labeler"
-        args="-cfg $(arg config_file) -sn right_camera"
+    <!-- Sensor rgb_right rgb_labeler -->
+    <node name="rgb_right_labeler" pkg="atom_calibration" type="rgb_labeler"
+        args="-cfg $(arg config_file) -sn rgb_right"
         required="true"
         output="screen"/>
     
