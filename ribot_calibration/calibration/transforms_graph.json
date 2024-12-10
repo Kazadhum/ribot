@@ -17,7 +17,7 @@
     {
       "child": "imu_link",
       "from_bag": false,
-      "is_transformation_calibrated": false,
+      "is_transformation_calibrated": true,
       "joint_name": "imu_joint",
       "joint_params_calibrated": null,
       "parent": "plate",

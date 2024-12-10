@@ -101,9 +101,9 @@ additional_tfs:
   #           This is the transformation (i.e. link) that we be optimized.
   #
   # EXAMPLE:
-  #base_footprint_to_base_link:
-  #  parent_link: "base_footprint"
-  #  child_link: "base_link"
+  plate_to_imu:
+   parent_link: "plate"
+   child_link: "imu_link"
 
 # ATOM can also calibrate several parameters of your joints.
 # In this section you should discriminate the joints that will be part of the calibrations.
