@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<robot name="ribot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- ribot is a simple robotic system containing one rgb camera and an imu on top of a tripop.  -->
+
+    <!-- Define  properties -->
+    <xacro:property name="M_PI" value="3.1415926535897931" />
+    <material name="Orange">
+        <color rgba="1.0 0.4 0.0 1.0"/>
+    </material>
+
+    <!-- Colors -->
+    <material name="tripod_color">
+        <color rgba="0.21 0.21 .21 1"/>
+    </material>
+
+    <xacro:macro name="default_inertial">
+        <inertial>
+            <mass value="1"/>
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
+        </inertial>
+    </xacro:macro>
+
+    <!-- The Robot's base link -->
+    <link name="base_link">
+        <xacro:default_inertial/>
+    </link>
+
+    <!-- Joint connecting the base link to the second link -->
+    <joint name="base_link_to_revolute_x" type="continuous">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <axis xyz="1 0 0"/>
+        <parent link="base_link"/>
+        <child link="revolute_x"/>
+        <limit effort="30" velocity="1.0"/>
+    </joint>
+
+    <link name="revolute_x">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <xacro:default_inertial/>
+    </link>
+
+    <joint name="revolute_x_to_revolute_y" type="continuous">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <axis xyz="0 1 0"/>
+        <parent link="revolute_x"/>
+        <child link="revolute_y"/>
+        <limit effort="30" velocity="1.0"/>
+    </joint>
+
+    <link name="revolute_y">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <xacro:default_inertial/>
+    </link>
+
+    <joint name="revolute_y_to_revolute_z" type="continuous">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <parent link="revolute_y"/>
+        <child link="revolute_z"/>
+        <limit effort="30" velocity="1.0"/>
+    </joint>
+
+    <link name="revolute_z">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <xacro:default_inertial/>
+    </link>
+    
+    <joint name="revolute_z_to_prismatic_x" type="prismatic">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <axis xyz="1 0 0"/>
+        <parent link="revolute_z"/>
+        <child link="prismatic_x"/>
+        <limit effort="3000" velocity="30.0"/>
+    </joint>
+    
+    <link name="prismatic_x">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <xacro:default_inertial/>
+    </link>
+
+    <joint name="prismatic_x_to_plate" type="fixed">
+        <origin xyz="0 0 0.0075" rpy="0 0 0"/>
+        <parent link="prismatic_x"/>
+        <child link="plate"/>    
+    </joint>
+
+    <!-- A second link, with the shape of a cylinder -->
+    <link name="plate">
+        <visual>
+            <geometry>
+                <box size="0.04 0.4 0.015" />
+            </geometry>
+            <material name="tripod_color"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.04 0.4 0.015" />
+            </geometry>
+        </collision>
+        <xacro:default_inertial/>
+    </link>
+
+    <!-- Gazebo Plugin for ROS Control -->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/</robotNamespace>
+        </plugin>
+    </gazebo>
+
+
+    <!-- Transmissions -->
+    <transmission name="base_link_to_revolute_x_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <actuator name="motor1">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+        <joint name="base_link_to_revolute_x">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+    </transmission>
+
+    <transmission name="revolute_x_to_revolute_y_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <actuator name="motor2">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+        <joint name="revolute_x_to_revolute_y">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+    </transmission>
+
+    <transmission name="revolute_y_to_revolute_z_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <actuator name="motor3">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+        <joint name="revolute_y_to_revolute_z">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+    </transmission>
+    
+    <transmission name="revolute_z_to_prismatic_x_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <actuator name="motor4">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+        <joint name="revolute_z_to_prismatic_x">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+    </transmission>
+
+</robot>

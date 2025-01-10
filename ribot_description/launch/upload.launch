@@ -1,9 +1,16 @@
 <launch>
-
-  <param name="robot_description" command="$(find xacro)/xacro '$(find ribot_description)/urdf/robot.urdf.xacro'"/>
-  
+  <param name="robot_description" command="$(find xacro)/xacro '$(find ribot_description)/urdf/robot2.urdf.xacro'"/>
+ <rosparam command="load"
+           file="$(find ribot_description)/config/controller_config.yaml"
+           ns="ribot_joint_state_controller"/>
+  <rosparam command="load"
+            file="$(find ribot_description)/config/joint_group.yaml"
+            ns="ribot_joint_group_controller" />
+  <node name="ribot_controller_spawner"
+        pkg="controller_manager" type="spawner"
+        args="ribot_joint_state_controller
+              ribot_joint_group_controller
+              --shutdown-timeout 3"/>
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" output="screen"/>
-  
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
-
 </launch>

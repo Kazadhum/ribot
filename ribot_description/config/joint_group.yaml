@@ -1,0 +1,6 @@
+type: "position_controllers/JointGroupPositionController"
+joints:
+  - base_link_to_revolute_x
+  - revolute_x_to_revolute_y
+  - revolute_y_to_revolute_z
+  - revolute_z_to_prismatic_x
