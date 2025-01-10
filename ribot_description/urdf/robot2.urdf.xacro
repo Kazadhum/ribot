@@ -27,10 +27,23 @@
     </link>
 
     <!-- Joint connecting the base link to the second link -->
-    <joint name="base_link_to_revolute_x" type="continuous">
+    <joint name="base_link_to_prismatic_x" type="prismatic">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <axis xyz="1 0 0"/>
         <parent link="base_link"/>
+        <child link="prismatic_x"/>
+        <limit effort="30" velocity="1.0" lower="-10000" upper="10000"/>
+    </joint>
+
+    <link name="prismatic_x">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <xacro:default_inertial/>
+    </link>
+
+    <joint name="prismatic_x_to_revolute_x" type="continuous">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <axis xyz="1 0 0"/>
+        <parent link="prismatic_x"/>
         <child link="revolute_x"/>
         <limit effort="30" velocity="1.0"/>
     </joint>
@@ -65,23 +78,10 @@
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <xacro:default_inertial/>
     </link>
-    
-    <joint name="revolute_z_to_prismatic_x" type="prismatic">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <axis xyz="1 0 0"/>
-        <parent link="revolute_z"/>
-        <child link="prismatic_x"/>
-        <limit effort="3000" velocity="30.0"/>
-    </joint>
-    
-    <link name="prismatic_x">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <xacro:default_inertial/>
-    </link>
 
-    <joint name="prismatic_x_to_plate" type="fixed">
+    <joint name="revolute_z_to_plate" type="fixed">
         <origin xyz="0 0 0.0075" rpy="0 0 0"/>
-        <parent link="prismatic_x"/>
+        <parent link="revolute_z"/>
         <child link="plate"/>    
     </joint>
 
@@ -110,19 +110,29 @@
 
 
     <!-- Transmissions -->
-    <transmission name="base_link_to_revolute_x_trans">
+    <transmission name="base_link_to_prismatic_x_trans">
         <type>transmission_interface/SimpleTransmission</type>
         <actuator name="motor1">
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
-        <joint name="base_link_to_revolute_x">
+        <joint name="base_link_to_prismatic_x">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+    </transmission>
+
+    <transmission name="prismatic_x_to_revolute_x_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <actuator name="motor2">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+        <joint name="prismatic_x_to_revolute_x">
             <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
         </joint>
     </transmission>
 
     <transmission name="revolute_x_to_revolute_y_trans">
         <type>transmission_interface/SimpleTransmission</type>
-        <actuator name="motor2">
+        <actuator name="motor3">
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
         <joint name="revolute_x_to_revolute_y">
@@ -132,7 +142,7 @@
 
     <transmission name="revolute_y_to_revolute_z_trans">
         <type>transmission_interface/SimpleTransmission</type>
-        <actuator name="motor3">
+        <actuator name="motor4">
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
         <joint name="revolute_y_to_revolute_z">
@@ -140,14 +150,5 @@
         </joint>
     </transmission>
     
-    <transmission name="revolute_z_to_prismatic_x_trans">
-        <type>transmission_interface/SimpleTransmission</type>
-        <actuator name="motor4">
-            <mechanicalReduction>1</mechanicalReduction>
-        </actuator>
-        <joint name="revolute_z_to_prismatic_x">
-            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
-        </joint>
-    </transmission>
 
 </robot>
