@@ -2,6 +2,7 @@ type: "position_controllers/JointGroupPositionController"
 joints:
   - base_link_to_prismatic_x
   - prismatic_x_to_prismatic_y
-  - prismatic_y_to_revolute_x
+  - prismatic_y_to_prismatic_z
+  - prismatic_z_to_revolute_x
   - revolute_x_to_revolute_y
   - revolute_y_to_revolute_z
