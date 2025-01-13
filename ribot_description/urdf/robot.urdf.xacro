@@ -26,18 +26,42 @@
     <xacro:include filename="$(find ribot_description)/urdf/rgb_camera.urdf.xacro" />
     <xacro:include filename="$(find ribot_description)/urdf/imu.urdf.xacro"/>
 
-    <!-- World link -->
-    <!-- <link name="world"/> -->
-
     <link name="base_link">
+        <xacro:default_inertial />
     </link>
 
-    <joint name="base_link_to_plate" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <parent link="base_link"/>
-      <child link="plate"/>
+    <joint name="base_link_to_prismatic_x" type="prismatic">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="prismatic_x"/>
+        <axis xyz="1 0 0"/>
+        <limit effort="1000.0" lower="-0.38" upper="0" velocity="0.5"/>
     </joint>
 
+    <link name="prismatic_x">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <box size="0.001 0.001 0.001" />
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <box size="0.001 0.001 0.001" />
+            </geometry>
+        </collision>
+        <xacro:default_inertial />
+        <gazebo>
+            <gravity>0</gravity>
+        </gazebo>
+    </link>
+
+    <joint name="prismatic_x_to_plate" type="fixed">
+        <parent link="prismatic_x"/>
+        <child link="plate"/>
+        <origin xyz="0.1 0 0" rpy="0 0 0"/>
+    </joint>
 
     <link name="plate">
         <visual>
@@ -54,40 +78,47 @@
             </geometry>
         </collision>
         <xacro:default_inertial />
-        <gazebo>
-            <gravity>0</gravity>
-        </gazebo>
-
     </link>
 
-    <!-- <link name="imu">
-    </link> -->
 
-    <!-- <joint name="plate_to_imu" type="fixed">
-      <origin xyz="0 0.1 -0.305" rpy="0 0 0"/>
-      <parent link="plate"/>
-      <child link="imu"/>
-    </joint> -->
+    <!-- GAZEBO -->
+    <!-- ROS control plugin -->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <namespace>/ribot</namespace>
+        </plugin>
+    </gazebo>
+
+    <!-- Transmissions -->
+    <transmission name="base_link_to_prismatic_x_trans">
+        <type>transmission_interfact/SimpleTransmission</type>
+        <actuator name="motor1">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+        <joint name="base_link_to_prismatic_x">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+    </transmission>
 
     <!-- SENSORS -->
     <!-- Left IMU -->
-    <xacro:imu parent="plate" prefix="imu" color_gazebo="Red">
-        <origin xyz="0.0 0.18 0.01" rpy="0 0 0" />          
-        <color_rgb_rviz>
-            <material name="red">
-                <color rgba="0.9 0 0 1" />
-            </material>
-        </color_rgb_rviz>
-    </xacro:imu>
+    <!-- <xacro:imu parent="plate" prefix="imu" color_gazebo="Red"> -->
+        <!-- <origin xyz="0.0 0.18 0.01" rpy="0 0 0" />           -->
+        <!-- <color_rgb_rviz> -->
+            <!-- <material name="red"> -->
+                <!-- <color rgba="0.9 0 0 1" /> -->
+            <!-- </material> -->
+        <!-- </color_rgb_rviz> -->
+    <!-- </xacro:imu> -->
 
     <!-- Right Camera -->
-    <xacro:rgb_camera parent="plate" prefix="rgb_right" color_gazebo="Green">
-        <origin xyz="0.015 -0.18 0.0195" rpy="0 0 0" />
-        <color_rgb_rviz>
-            <material name="green">
-                <color rgba="0 0.9 0 1" />
-            </material>
-        </color_rgb_rviz>
-    </xacro:rgb_camera>
+    <!-- <xacro:rgb_camera parent="plate" prefix="rgb_right" color_gazebo="Green"> -->
+        <!-- <origin xyz="0.015 -0.18 0.0195" rpy="0 0 0" /> -->
+        <!-- <color_rgb_rviz> -->
+            <!-- <material name="green"> -->
+                <!-- <color rgba="0 0.9 0 1" /> -->
+            <!-- </material> -->
+        <!-- </color_rgb_rviz> -->
+    <!-- </xacro:rgb_camera> -->
 
 </robot>

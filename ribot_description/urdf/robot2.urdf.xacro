@@ -21,6 +21,9 @@
         </inertial>
     </xacro:macro>
 
+    <xacro:include filename="$(find ribot_description)/urdf/imu.urdf.xacro"/>    
+
+
     <!-- The Robot's base link -->
     <link name="base_link">
         <xacro:default_inertial/>
@@ -196,5 +199,15 @@
         </joint>
     </transmission>
     
+    <!-- SENSORS -->
+    <!-- Left IMU -->
+    <xacro:imu parent="plate" prefix="imu" color_gazebo="Red">
+        <origin xyz="0.0 0.18 0.01" rpy="0 0 0" />          
+        <color_rgb_rviz>
+            <material name="red">
+                <color rgba="0.9 0 0 1" />
+            </material>
+        </color_rgb_rviz>
+    </xacro:imu>
 
 </robot>
