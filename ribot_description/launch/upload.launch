@@ -6,6 +6,9 @@
   <rosparam command="load"
             file="$(find ribot_description)/config/joint_group.yaml"
             ns="ribot_joint_group_controller" />
+  <rosparam command="load"
+            file="$(find ribot_description)/config/pids.yaml"
+            ns="" />
   <node name="ribot_controller_spawner"
         pkg="controller_manager" type="spawner"
         args="ribot_joint_state_controller
