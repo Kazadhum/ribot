@@ -50,7 +50,7 @@ Visualization Manager:
       Z: 0
     Plane: XY
     Plane Cell Count: 10
-    Reference Frame: world
+    Reference Frame: base_link
     Value: true
   - Class: rviz/TF
     Enabled: true
@@ -86,23 +86,11 @@ Visualization Manager:
     Namespaces: {}
     Queue Size: 10
     Value: true
-  - Class: rviz/Image
-    Enabled: true
-    Image Topic: /rgb_right/image_raw/c000/labeled2d
-    Max Value: 1
-    Median window: 5
-    Min Value: 0
-    Name: rgb_right-Labels-Image
-    Normalize Range: true
-    Queue Size: 2
-    Transport Hint: raw
-    Unreliable: false
-    Value: false
   Enabled: true
   Global Options:
     Background Color: 255; 255; 255
     Default Light: true
-    Fixed Frame: world
+    Fixed Frame: base_link
     Frame Rate: 30
   Name: root
   Tools:

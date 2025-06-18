@@ -50,7 +50,7 @@ Visualization Manager:
       Z: 0
     Plane: XY
     Plane Cell Count: 10
-    Reference Frame: world
+    Reference Frame: base_link
     Value: true
   - Class: rviz/TF
     Enabled: true
@@ -84,43 +84,11 @@ Visualization Manager:
     Show Visual Aids: false
     Update Topic: set_initial_estimate/update
     Value: true
-  - Class: rviz/Image
-    Enabled: true
-    Image Topic: /rgb_right/image_raw
-    Max Value: 1
-    Median window: 5
-    Min Value: 0
-    Name: rgb_right-Image
-    Normalize Range: true
-    Queue Size: 2
-    Transport Hint: raw
-    Unreliable: false
-    Value: false
-  - Class: rviz/Camera
-    Enabled: true
-    Image Rendering: background and overlay
-    Image Topic: /rgb_right/image_raw
-    Name: rgb_right-Camera
-    Overlay Alpha: 0.5
-    Queue Size: 2
-    Transport Hint: raw
-    Unreliable: false
-    Value: false
-    Visibility:
-      Value: true
-    Zoom Factor: 1
-  - Class: rviz/MarkerArray
-    Enabled: true
-    Marker Topic: rgb_right/frustum
-    Name: rgb_right-Frustum
-    Namespaces: {}
-    Queue Size: 10
-    Value: true
   Enabled: true
   Global Options:
     Background Color: 255; 255; 255
     Default Light: true
-    Fixed Frame: world
+    Fixed Frame: base_link
     Frame Rate: 30
   Name: root
   Tools:

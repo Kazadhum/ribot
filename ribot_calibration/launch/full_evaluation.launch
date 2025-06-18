@@ -33,9 +33,9 @@
 
     <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
     <!-- Evaluation -->
-    <node type="inter_collection_rgb_to_rgb_evaluation" pkg="atom_evaluation" 
-        name="inter_collection_rgb_right_to_rgb_right_pattern_1_evaluation"
-        args="-ss rgb_right -st rgb_right -wf world -train_json $(arg train_json) -test_json $(arg test_json) -csf '$(arg csf)' -sfr" 
+    <node type="inter_collection_imu_to_imu_evaluation" pkg="atom_evaluation" 
+        name="inter_collection_imu_hand_to_imu_hand_pattern_1_evaluation"
+        args="-ss imu_hand -st imu_hand -wf base_link -train_json $(arg train_json) -test_json $(arg test_json) -csf '$(arg csf)' -sfr" 
         output="screen"/>
 
     

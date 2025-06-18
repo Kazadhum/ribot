@@ -1,93 +1,313 @@
 <?xml version="1.0"?>
-<robot name="ribot" xmlns:xacro="http://ros.org/wiki/xacro">
-
-    <!-- ribot is a simple robotic system containing one rgb camera and an imu on top of a tripop.  -->
-
-    <!-- Define  properties -->
-    <xacro:property name="M_PI" value="3.1415926535897931" />
-    <material name="Orange">
-        <color rgba="1.0 0.4 0.0 1.0"/>
-    </material>
-
-    <!-- Colors -->
-    <material name="tripod_color">
-        <color rgba="0.21 0.21 .21 1"/>
-    </material>
-
-    <xacro:macro name="default_inertial">
-        <inertial>
-            <mass value="1"/>
-            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0" />
-        </inertial>
-    </xacro:macro>
-
-    <!-- Includes -->
-    <xacro:include filename="$(find ribot_description)/urdf/robot.gazebo.xacro" />
-    <xacro:include filename="$(find ribot_description)/urdf/rgb_camera.urdf.xacro" />
-    <xacro:include filename="$(find ribot_description)/urdf/imu.urdf.xacro"/>
-
-    <!-- World link -->
-    <!-- <link name="world"/> -->
-
-    <link name="base_link">
-    </link>
-
-    <joint name="base_link_to_plate" type="fixed">
+<robot name="/home/diogo/catkin_ws/src/robots/ribot/ribot_description/urdf/UR5e.urdf" xmlns:xacro="http://ros.org/wiki/xacro">
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.076" length="0.1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.076" length="0.1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="shoulder_pan_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="shoulder_link"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="150" lower="-6.28319" upper="6.28319" velocity="3.14"/>
+    <origin xyz="0 0 0.163" rpy="0 0 0"/>
+  </joint>
+  <link name="shoulder_link">
+    <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <parent link="base_link"/>
-      <child link="plate"/>
-    </joint>
-
-
-    <link name="plate">
-        <visual>
-            <origin xyz="0 0 0" rpy="0 0 0" />
-            <geometry>
-                <box size="0.04 0.4 0.015" />
-            </geometry>
-            <material name="tripod_color" />
-        </visual>
-        <collision name="tripod_collision">
-            <origin xyz="0 0 0" rpy="0 0 0" />
-            <geometry>
-                <box size="0.04 0.15 0.015" />
-            </geometry>
-        </collision>
-        <xacro:default_inertial />
-        <gazebo>
-            <gravity>0</gravity>
-        </gazebo>
-
-    </link>
-
-    <!-- <link name="imu">
-    </link> -->
-
-    <!-- <joint name="plate_to_imu" type="fixed">
-      <origin xyz="0 0.1 -0.305" rpy="0 0 0"/>
-      <parent link="plate"/>
-      <child link="imu"/>
-    </joint> -->
-
-    <!-- SENSORS -->
-    <!-- Left IMU -->
-    <xacro:imu parent="plate" prefix="imu" color_gazebo="Red">
-        <origin xyz="0.0 0.18 0.01" rpy="0 0 0" />          
-        <color_rgb_rviz>
-            <material name="red">
-                <color rgba="0.9 0 0 1" />
-            </material>
-        </color_rgb_rviz>
-    </xacro:imu>
-
-    <!-- Right Camera -->
-    <xacro:rgb_camera parent="plate" prefix="rgb_right" color_gazebo="Green">
-        <origin xyz="0.015 -0.18 0.0195" rpy="0 0 0" />
-        <color_rgb_rviz>
-            <material name="green">
-                <color rgba="0 0.9 0 1" />
-            </material>
-        </color_rgb_rviz>
-    </xacro:rgb_camera>
-
+      <geometry>
+        <cylinder radius="0.059" length="0.135"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.059" length="0.135"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0.03 0" rpy="-1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.059" length="0.093"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.03 0" rpy="-1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.059" length="0.093"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="shoulder_lift_joint" type="revolute">
+    <parent link="shoulder_link"/>
+    <child link="upper_arm_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="150" lower="-6.28319" upper="6.28319" velocity="3.14"/>
+    <origin xyz="0 0.138 0" rpy="0 1.570796 0"/>
+  </joint>
+  <link name="upper_arm_link">
+    <visual>
+      <origin xyz="0 0 0.22" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.059" length="0.407"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.22" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.059" length="0.407"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="-1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.059" length="0.133"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="-1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.059" length="0.133"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.005 0.424" rpy="-1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.059" length="0.149"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.005 0.424" rpy="-1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.059" length="0.149"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="elbow_joint" type="revolute">
+    <parent link="upper_arm_link"/>
+    <child link="forearm_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="150" lower="-3.14159" upper="3.14159" velocity="3.14"/>
+    <origin xyz="0 -0.131 0.425" rpy="0 0 0"/>
+  </joint>
+  <link name="forearm_link">
+    <visual>
+      <origin xyz="0 0 0.207" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.038" length="0.36"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.207" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.038" length="0.36"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.001 0.39" rpy="-1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.039" length="0.109"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.001 0.39" rpy="-1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.039" length="0.109"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0.06 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.058" length="0.05"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.06 0" rpy="1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.058" length="0.05"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0.06 0.025" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.058"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.06 0.025" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.058"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0.06 -0.025" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.058"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.06 -0.025" rpy="1.570796 0 0"/>
+      <geometry>
+        <sphere radius="0.058"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0.07" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.04" length="0.1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.07" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.04" length="0.1"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0.05 0.07" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.04"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.05 0.07" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.04"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.05 0.07" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.04"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.05 0.07" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.04"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="wrist_1_joint" type="revolute">
+    <parent link="forearm_link"/>
+    <child link="wrist_1_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="28" lower="-6.28319" upper="6.28319" velocity="6.28"/>
+    <origin xyz="0 0 0.392" rpy="0 1.570796 0"/>
+  </joint>
+  <link name="wrist_1_link">
+    <visual>
+      <origin xyz="0 0.089 0" rpy="-1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.038" length="0.086"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.089 0" rpy="-1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.038" length="0.086"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0.126 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.038" length="0.112"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.126 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.038" length="0.112"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="wrist_2_joint" type="revolute">
+    <parent link="wrist_1_link"/>
+    <child link="wrist_2_link"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="28" lower="-6.28319" upper="6.28319" velocity="6.28"/>
+    <origin xyz="0 0.127 0" rpy="0 0 0"/>
+  </joint>
+  <link name="wrist_2_link">
+    <visual>
+      <origin xyz="0 -0.001 0.0995" rpy="-1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.04" length="0.108"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.001 0.0995" rpy="-1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.04" length="0.108"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 -0.001 0.0676" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.038" length="0.043"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.001 0.0676" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.038" length="0.043"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="wrist_3_joint" type="revolute">
+    <parent link="wrist_2_link"/>
+    <child link="wrist_3_link"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="28" lower="-6.28319" upper="6.28319" velocity="6.28"/>
+    <origin xyz="0 0 0.1" rpy="0 0 0"/>
+  </joint>
+  <link name="wrist_3_link">
+    <visual>
+      <origin xyz="0 0.07 0" rpy="-1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.038" length="0.048"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.07 0" rpy="-1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.038" length="0.048"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0.09 0" rpy="-1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.032" length="0.018"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.09 0" rpy="-1.570796 0 0"/>
+      <geometry>
+        <cylinder radius="0.032" length="0.018"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="accelerometer">
+  </link>
+  <joint name="wrist_3_link_accelerometer_joint" type="fixed">
+    <parent link="wrist_3_link"/>
+    <child link="accelerometer"/>
+    <origin xyz="0 0.1 0" rpy="0 0 0"/>
+  </joint>
+  <link name="gyro">
+  </link>
+  <joint name="wrist_3_link_gyro_joint" type="fixed">
+    <parent link="wrist_3_link"/>
+    <child link="gyro"/>
+    <origin xyz="0 0.1 0" rpy="0 0 0"/>
+  </joint>
 </robot>

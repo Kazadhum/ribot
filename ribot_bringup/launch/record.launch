@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-    <!-- EDIT: 
+    <!-- EDIT:
     create a folder in HOME: 'bagfiles' bag will be recorded here
     add to .bashrc: 'export ROS_BAGS="$HOME/bagfiles"' -->
 
@@ -17,8 +17,7 @@
         /tf_static
         /joint_states
 
-        /rgb_right/image_raw/compressed
-        /rgb_right/camera_info
+        /imu
 
         -o $(arg bag)">
     </node>

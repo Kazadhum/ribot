@@ -1,0 +1,50 @@
+#VRML_SIM R2023a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/robots/universal_robots/protos/UR5e.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.21715172765459598 -0.1157137553197119 0.969255102646581 4.095106519653855
+  position 2.0504395774698785 2.1029580355122777 1.0891166425970036
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 10 10
+}
+UR5e {
+  controller "<extern>"
+  supervisor TRUE
+  toolSlot [
+    Gyro {
+      physics Physics {
+      }
+    }
+    Accelerometer {
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.92549 0.501961 1
+            metalness 0
+          }
+          geometry DEF ACCEL_GEOM Box {
+            size 0.01 0.01 0.01
+          }
+        }
+      ]
+      boundingObject USE ACCEL_GEOM
+      physics Physics {
+      }
+    }
+  ]
+}
+Robot {
+  name "joint_state_supervisor"
+  supervisor TRUE
+}
